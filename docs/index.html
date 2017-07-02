@@ -170,6 +170,9 @@
                     },
                     success: function (data) {
                         console.error(data);
+
+                        $('p#image-text').text(data.data.text.join(' '));
+                        $('p#image-point').text(data.data.point);
                     },
                 });
             }
@@ -190,9 +193,9 @@
 
     <!-- Following Menu -->
     <div class="ui large top fixed hidden menu">
-    <div class="ui container">
-        <a class="active item">Home</a>
-    </div>
+        <div class="ui container">
+            <a class="active item">Home</a>
+        </div>
     </div>
 
     <!-- Sidebar Menu -->
@@ -219,7 +222,7 @@
                     CloudFunctions と CloudVisionAPI で遊ぶよ
                 </h1>
                 <h2>テキスト認証と、食べログのポイントを取るよ</h2>
-                <a href="https://github.com/starfish719/restaurantScouter">
+                <a href="https://github.com/starfish719/restaurantScouter" target="_blank">
             　       <div class="ui huge primary button">Get Started <i class="right arrow icon"></i></div>
                 </a>
             </div>
