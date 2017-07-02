@@ -14,7 +14,7 @@ const httpcli = require('cheerio-httpcli');
 exports.api = function helloWorld (req, res) {
 
     res.header('Content-Type','application/json');
-    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Origin', 'starfish719.github.io');
     res.header('Access-Control-Allow-Headers', 'Content-Type');
 
     if (req.body.base64 === undefined) {
