@@ -123,10 +123,6 @@
             vertical-align: middle;
         }
 
-        #upload-image {
-            display: none;
-        }
-
         #upload-image-img {
             display: none;
         }
@@ -157,7 +153,15 @@
             $(this).removeClass('dragover');
 
             var file = e.originalEvent.dataTransfer.files[0];
- 
+            uploadImage(file);
+        });
+        $('input#upload-image').change(function () {
+            var file = this.files[0];
+            uploadImage(file);
+        });
+        
+        var uploadImage = function (file) {
+
             // 選択されたファイルが画像かどうか確認
             if (!file.type.match(/^image/)) {
                 alert('画像ファイルのみ利用可能です');
@@ -184,7 +188,8 @@
                 });
             }
             fileReader.readAsDataURL(file);
-        });
+        };
+
         $('#drop-zone').on('dragover', function (e) {
             e.preventDefault();
             $(this).addClass('dragover');
@@ -239,9 +244,9 @@
             <div class="ui middle aligned stackable grid container">
                 <div class="row">
                     <div class="six wide left floated column">
+                        <input type="file" id="upload-image" accept="image/*">
                         <div id="drop-zone"><span class="here">ここにファイルをドラッグ</span></div>
                         <img src="" id="upload-image-img" class="ui large bordered rounded image">
-                        <input type="file" id="upload-image" accept="image/*">
                     </div>
                     <div class="eight wide column">
                         <h3 class="ui header">テキスト抽出</h3>
