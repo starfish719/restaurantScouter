@@ -157,6 +157,13 @@
             $(this).removeClass('dragover');
 
             var file = e.originalEvent.dataTransfer.files[0];
+ 
+            // 選択されたファイルが画像かどうか確認
+            if (!file.type.match(/^image/)) {
+                alert('画像ファイルのみ利用可能です');
+                return;
+            }
+            
             var fileReader = new FileReader();
             fileReader.onload = function(evt) {
                 $('img#upload-image-img').attr('src', evt.target.result);
