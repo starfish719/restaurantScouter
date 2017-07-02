@@ -155,15 +155,23 @@
         $('#drop-zone').on('drop', function (e) {
             e.preventDefault();
             $(this).removeClass('dragover');
-            console.log(e.originalEvent.dataTransfer.files);
+
             var file = e.originalEvent.dataTransfer.files[0];
             var fileReader = new FileReader();
             fileReader.onload = function(evt) {
-                console.error(evt.target.result);
                 $('img#upload-image-img').attr('src', evt.target.result);
                 $('img#upload-image-img').show();
-                // document.getElementById("base64area").innerHTML=evt.target.result;
-                // document.getElementById("datauri").href=evt.target.result;
+                $.ajax({
+                    type: 'post',
+                    url: 'https://us-central1-restaulantscouter.cloudfunctions.net/restaurant-scouter-api',
+                    cache: false,
+                    data: {
+                        base64: evt.target.result,
+                    },
+                    success: function (data) {
+                        console.error(data);
+                    },
+                });
             }
             fileReader.readAsDataURL(file);
         });

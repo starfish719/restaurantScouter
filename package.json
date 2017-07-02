@@ -1,10 +1,9 @@
 
 {
-    "name": "restaurantScouter",
+    "name": "restaurantScouterApi",
     "version": "0.0.1",
     "dependencies": {
         "@google-cloud/vision": "latest",
-        "@google-cloud/storage": "latest",
         "async": "latest",
         "cheerio-httpcli": "latest"
     }
