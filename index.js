@@ -53,11 +53,9 @@ exports.api = function helloWorld (req, res) {
                                 return;
                             }
                         }
-
-                        waterCallback(null, '');
-                    } else {
-                        throw new Error('not found web detection');
                     }
+                    
+                    waterCallback(null, '');
                 })
                 .catch((err) => {
                     waterCallback(err);
