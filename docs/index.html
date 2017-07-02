@@ -112,6 +112,24 @@
                 font-size: 1.5em;
             }
         }
+
+        #drop-zone {
+            width: 100%;
+            min-height: 200px;
+        }
+
+        #drop-zone span {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        #upload-image {
+            display: none;
+        }
+
+        #upload-image-img {
+            display: none;
+        }
     </style>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -132,7 +150,31 @@
         });
 
         // create sidebar and attach to menu open
-        $('.ui.sidebar').sidebar('attach events', '.toc.item');       
+        $('.ui.sidebar').sidebar('attach events', '.toc.item');
+
+        $('#drop-zone').on('drop', function (e) {
+            e.preventDefault();
+            $(this).removeClass('dragover');
+            console.log(e.originalEvent.dataTransfer.files);
+            var file = e.originalEvent.dataTransfer.files[0];
+            var fileReader = new FileReader();
+            fileReader.onload = function(evt) {
+                console.error(evt.target.result);
+                $('img#upload-image-img').attr('src', evt.target.result);
+                $('img#upload-image-img').show();
+                // document.getElementById("base64area").innerHTML=evt.target.result;
+                // document.getElementById("datauri").href=evt.target.result;
+            }
+            fileReader.readAsDataURL(file);
+        });
+        $('#drop-zone').on('dragover', function (e) {
+            e.preventDefault();
+            $(this).addClass('dragover');
+        });
+        $('#drop-zone').on('dragleave', function (e) {
+            e.preventDefault();
+            $(this).removeClass('dragover');
+        });       
     });
     </script>
 </head>
@@ -173,20 +215,21 @@
             　       <div class="ui huge primary button">Get Started <i class="right arrow icon"></i></div>
                 </a>
             </div>
-
         </div> 
 
         <div class="ui vertical stripe segment">
             <div class="ui middle aligned stackable grid container">
                 <div class="row">
                     <div class="six wide left floated column">
-                        <img src="assets/images/wireframe/white-image.png" class="ui large bordered rounded image">
+                        <div id="drop-zone"><span class="here">ここにファイルをドラッグ</span></div>
+                        <img src="" id="upload-image-img" class="ui large bordered rounded image">
+                        <input type="file" id="upload-image" accept="image/*">
                     </div>
                     <div class="eight wide column">
-                        <h3 class="ui header">We Help Companies and Companions</h3>
-                        <p>We can give your company superpowers to do things that they never thought possible. Let us delight your customers and empower your needs...through pure data analytics.</p>
-                        <h3 class="ui header">We Make Bananas That Can Dance</h3>
-                        <p>Yes that's right, you thought it was the stuff of dreams, but even bananas can be bioengineered.</p>
+                        <h3 class="ui header">テキスト抽出</h3>
+                        <p id="image-text"></p>
+                        <h3 class="ui header">ポイント</h3>
+                        <p id="image-point"></p>
                     </div>
                 </div>
             </div>
