@@ -123,7 +123,7 @@
             vertical-align: middle;
         }
 
-        #upload-image-img {
+        div[data-image-view-area] {
             display: none;
         }
     </style>
@@ -170,8 +170,10 @@
             
             var fileReader = new FileReader();
             fileReader.onload = function(evt) {
+                $('div[data-image-input-area]').hide();
+                $('div[data-image-view-area]').show();
                 $('img#upload-image-img').attr('src', evt.target.result);
-                $('img#upload-image-img').show();
+                
                 $.ajax({
                     type: 'post',
                     url: 'https://us-central1-restaulantscouter.cloudfunctions.net/restaurant-scouter-api',
@@ -180,7 +182,7 @@
                         base64: evt.target.result,
                     },
                     success: function (data) {
-                        console.error(data);
+                        console.log(data);
 
                         $('p#image-text').text(data.data.text.join(' '));
                         $('p#image-point').text(data.data.point);
@@ -231,7 +233,7 @@
 
             <div class="ui text container">
                 <h1 class="ui inverted header">
-                    CloudFunctions と CloudVisionAPI で遊ぶよ
+                    CloudFunctions と CloudVision で遊ぶよ
                 </h1>
                 <h2>テキスト認証と、食べログのポイントを取るよ</h2>
                 <a href="https://github.com/starfish719/restaurantScouter" target="_blank">
@@ -244,9 +246,13 @@
             <div class="ui middle aligned stackable grid container">
                 <div class="row">
                     <div class="six wide left floated column">
-                        <input type="file" id="upload-image" accept="image/*">
-                        <div id="drop-zone"><span class="here">ここにファイルをドラッグ</span></div>
-                        <img src="" id="upload-image-img" class="ui large bordered rounded image">
+                        <div data-image-input-area>
+                            <input type="file" id="upload-image" accept="image/*">
+                            <div id="drop-zone"><span class="here">ここにファイルをドラッグ</span></div>
+                        </div>
+                        <div data-image-view-area style="display: none;">
+                            <img src="" id="upload-image-img" class="ui large bordered rounded image">
+                        </div>
                     </div>
                     <div class="eight wide column">
                         <h3 class="ui header">テキスト抽出</h3>
@@ -257,37 +263,6 @@
                 </div>
             </div>
         </div>
-
-        <!--
-        <div class="ui inverted vertical footer segment">
-            <div class="ui container">
-            <div class="ui stackable inverted divided equal height stackable grid">
-                <div class="three wide column">
-                <h4 class="ui inverted header">About</h4>
-                <div class="ui inverted link list">
-                    <a href="#" class="item">Sitemap</a>
-                    <a href="#" class="item">Contact Us</a>
-                    <a href="#" class="item">Religious Ceremonies</a>
-                    <a href="#" class="item">Gazebo Plans</a>
-                </div>
-                </div>
-                <div class="three wide column">
-                <h4 class="ui inverted header">Services</h4>
-                <div class="ui inverted link list">
-                    <a href="#" class="item">Banana Pre-Order</a>
-                    <a href="#" class="item">DNA FAQ</a>
-                    <a href="#" class="item">How To Access</a>
-                    <a href="#" class="item">Favorite X-Men</a>
-                </div>
-                </div>
-                <div class="seven wide column">
-                <h4 class="ui inverted header">Footer Header</h4>
-                <p>Extra space for a call to action inside the footer that could help re-engage users.</p>
-                </div>
-            </div>
-            </div>
-        </div>
-        -->
     
     </div>    
 
